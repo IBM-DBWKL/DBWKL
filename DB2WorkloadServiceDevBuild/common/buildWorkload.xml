@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="build workload">
+
+	<!-- ==================================
+		Builds a given workload
+		================================== -->
+	<target name="build_workload">
+		
+		<property name="wkl.project.path" value="../${wkl.project.name}"/>
+		<property name="wkl.jar.name" value="${wkl.project.name}.jar"/>
+		
+		<delete file="${build.target}/${wkl.jar.name}"/>
+		    	
+	    <jar destfile="${build.target}/${wkl.jar.name}">
+	        <fileset dir="${wkl.project.path}/bin"/>
+	    </jar>
+		
+	</target>
+</project>

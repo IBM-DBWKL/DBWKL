@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<spm:Task xmlns:spm="http://www.example.org/StoredProceduresSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/StoredProceduresSchema StoredProceduresSchema.xsd ">
+    <!-- if replay true, then no randomness will be executed -->
+	<spm:replay>false</spm:replay>
+
+	<!-- procedure declaration -->
+	<spm:procedure>
+		<spm:name>SPNAME1</spm:name>
+		<spm:schema>SPSCHEMA</spm:schema>
+		<spm:weight>25</spm:weight>
+	</spm:procedure>
+	<spm:procedure>
+		<spm:name>SPNAME2</spm:name>
+		<spm:schema>SPSCHEMA</spm:schema>
+		<spm:weight>50</spm:weight>
+	</spm:procedure>
+	<spm:procedure>
+		<spm:name>SPNAME3</spm:name>
+		<spm:schema>SCHEMA</spm:schema>
+		<spm:weight>25</spm:weight>
+		<spm:parameter>
+			<spm:name>PARM1</spm:name>
+			
+			<!-- data type (lower case!)
+				- integer
+				- smallint
+				- varchar
+				- char
+			 -->
+			<spm:dataType>integer</spm:dataType>
+			
+			<!-- parameter type (lower case!)
+			 	- in
+			 	- out
+			 	- in_out
+			 -->
+			<spm:parmType>in</spm:parmType>
+			
+			<!-- minimum integer/smallint value or min text
+				length in case data type is char/varchar
+			 -->
+			<spm:min>10</spm:min>
+			
+			<!-- maximum integer/smallint value or max text
+				length in case data type is char/varchar
+			 -->
+			<spm:max>100</spm:max>
+
+			<!-- list of allowed values which takes precedence
+				of minimum and maximum values
+			 -->			
+			<spm:list>EUR;USD;YEN</spm:list>
+
+			<!-- hard coded value that is always used. This one
+				takes precedence on any other list value or 
+				random minimum/maximum values			 
+			 -->
+			<spm:value>value</spm:value>
+		</spm:parameter>
+	</spm:procedure>
+</spm:Task>

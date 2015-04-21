@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+
+Name: staf/service/info
+Packaged-Jars: db2wkl.core db2wkl.request commons-lang3-3.1 commons-io-2.4 commons-codec-1.4
+Service-Class: com.ibm.db2wkl.DB2WorkloadService

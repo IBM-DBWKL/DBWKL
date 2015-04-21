@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Build Workload Internal Test Collection" default="build_workload_internal_test">
+
+	<import file="../common/buildWorkload.xml"/>
+			
+	<!-- ==================================
+		Builds the default workload collection
+		================================== -->
+	<target name="build_workload_internal_test">
+		
+		<antcall target="build_workload" inheritall="true">
+			<param name="wkl.project.name" value="Workload_Internal_TestCollection"/>
+			<param name="build.target" value="${build.target}"/>
+		</antcall>
+		
+	</target>
+</project>

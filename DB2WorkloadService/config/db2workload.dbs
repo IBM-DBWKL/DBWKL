@@ -1,0 +1,11 @@
+[your-db-nickname]
+ssid = your-db2-ssid
+hostname = your-db2-host
+port = 12345
+location = your-db2-location-name
+groupname = your-db2-group-name
+version = V100
+applid = something
+wlm = 
+vcat=
+racf=

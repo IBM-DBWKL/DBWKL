@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Nov 7, 2013 8:22:25 AM                                                        
+
+     DB2 Workload Service    
+     Common build file to remove the DB2WKL service from STAF
+                   
+     Stephan                                                                
+     ====================================================================== -->
+<project name="remove service">
+    <description>
+    	Common build file to remove the DB2WKL service from STAF
+    </description>
+
+	<!--
+		Removes the DB2WKL service from STAF
+		-->
+	<target name="remove_service">
+		<trycatch>
+			<try>
+				<!-- before, unregister the old service -->
+				<staf location="${db2wkl.deploy.target}" service="SERVICE" request="REMOVE SERVICE db2wkl" throwBuildException="1" />
+			</try>
+			<catch>
+				<echo>service could not be removed because it is not registered</echo>
+			</catch>
+		</trycatch>
+	</target>
+
+</project>

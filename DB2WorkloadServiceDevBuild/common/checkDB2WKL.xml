@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Nov 7, 2013 8:22:25 AM                                                        
+
+     DB2 Workload Service    
+     Common build file to print the DB2WKL version (basically check whether DB2WKL deplyoment was successful)
+                   
+     Stephan                                                                
+     ====================================================================== -->
+<project name="check db2wkl">
+    <description>
+    	Common build file to print the DB2WKL version (basically check whether DB2WKL deplyoment was successful)
+    </description>
+
+	<!--
+		Check the DB2WKL version after the deployment
+		-->
+	<target name="check_db2wkl">
+		<trycatch>
+			<try>
+				<staf location="${db2wkl.deploy.target}" service="DB2WKL" request="VERSION" throwBuildException="1" resultprefix="version"/>
+				<echo message="${version.result}"/>
+			</try>
+			<catch>
+				<echo>deployment failed due to an unknown reason</echo>
+			</catch>
+		</trycatch>
+	</target>
+
+</project>

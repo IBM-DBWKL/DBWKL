@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="DB2 Workload STAF Service" default="test_all">
+
+	<taskdef name="staf" classname="com.ibm.staf.ant.taskdef.STAF" classpath="${staf.path}/bin/STAFAnt.jar;${staf.path}/bin/JSTAF.jar"/>
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="${basedir}\libs\ant-contrib.jar" />
+		</classpath>
+	</taskdef>
+	
+	<property name="machine" value="berti.boeblingen.de.ibm.com"/>
+	<property name="service" value="db2wkl"/>
+	    			
+    <target name="test_all">
+    	
+    	<echo message="${machine}"></echo>
+    	<echo message="${service}"></echo>
+    	
+    	<!-- request -->
+    	<antcall target="execute_test"><param name="request" value="request list"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="request list detail"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="request clean"/></antcall>
+		<antcall target="execute_test"><param name="request" value="request count executing"/></antcall>
+		<antcall target="execute_test"><param name="request" value="request count finished"/></antcall>
+		<antcall target="execute_test"><param name="request" value="request count brokedown"/></antcall>
+		<antcall target="execute_test"><param name="request" value="request count stopped"/></antcall>
+		<antcall target="execute_test"><param name="request" value="request count internal"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="request count unknown"/></antcall>
+    	
+    	<!-- help -->
+    	<antcall target="execute_test"><param name="request" value="help"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="help wkl itdummy"/></antcall>
+    	
+    	<!-- log2 -->
+    	<antcall target="execute_test"><param name="request" value="log list filter reqid=124"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="log details true"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="log details false"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="log level error"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="log level warning"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="log level info"/></antcall>
+		<antcall target="execute_test"><param name="request" value="log level debug"/></antcall>
+		<antcall target="execute_test"><param name="request" value="log clean htmllogger"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="log clean filelogger"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="log list"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="log list 10"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="log list"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="log list filter reqid=2"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="log list filter level=debug"/></antcall>
+		<antcall target="execute_test"><param name="request" value="log list filter reqid=2;level=debug"/></antcall>
+    	<antcall target="execute_test"><param name="request" value="log list columns request,thread"/></antcall>
+    	
+    	<!-- version -->
+    	<antcall target="execute_test"><param name="request" value="version"/></antcall>
+    	
+    	<!-- workload request related -->
+    	
+    	
+    </target>
+	
+	<target name="execute_test">
+		<trycatch>
+			<try>
+				<staf location="${machine}" service="${service}" request="${request}" throwBuildException="1" resultPrefix="test"/>
+			</try>
+			<finally>
+				<if>
+					<equals arg1="${test.rc}" arg2="0"/>
+					<then>
+					</then>
+					<else>
+						<echo message="[${test.rc}][${test.result}][Error] ${request}"/>
+					</else>
+				</if>				
+			</finally>
+		</trycatch>
+		
+	</target>
+	
+</project>

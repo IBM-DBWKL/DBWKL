@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="com/ibm/db2wkl/request/handler/ValidatorHandler.java|com/ibm/db2wkl/request/ReroutedRequest.java|com/ibm/db2wkl/request/ExternalRequest.java|com/ibm/db2wkl/request/InternalRequest.java|com/ibm/db2wkl/request/handler/HelpHandler.java|com/ibm/db2wkl/request/handler/ListHandler.java|com/ibm/db2wkl/request/handler/LoggingHandler.java|com/ibm/db2wkl/request/handler/MiscHandler.java|com/ibm/db2wkl/request/handler/ReportHandler.java|com/ibm/db2wkl/request/handler/RequestHandler.java|com/ibm/db2wkl/request/handler/ConnectionTestHandler.java|com/ibm/db2wkl/request/handler/CoordinationHandler.java|com/ibm/db2wkl/request/handler/VersionHandler.java|com/ibm/db2wkl/request/ThreadedRequest.java" kind="src" path="src"/>
+	<classpathentry kind="src" path="srcgen"/>
+	<classpathentry kind="lib" path="libs/activation-1.1.jar"/>
+	<classpathentry kind="lib" path="libs/jaxb-api-2.0.jar"/>
+	<classpathentry kind="lib" path="libs/jaxb-impl-2.0.5-1.jar"/>
+	<classpathentry kind="lib" path="libs/jaxb-xjc-2.0.5-1.jar"/>
+	<classpathentry kind="lib" path="libs/mail-1.4.jar"/>
+	<classpathentry kind="lib" path="libs/stax-api-1.0.1.jar"/>
+	<classpathentry kind="lib" path="libs/wsdl4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="/DB2WorkloadService/libs/pdq.jar"/>
+	<classpathentry kind="lib" path="/DB2WorkloadService/libs/pdqmgmt.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DB2WorkloadServiceCore"/>
+	<classpathentry kind="lib" path="C:/Program Files/IBM/STAF3417/bin/JSTAF.jar"/>
+	<classpathentry kind="lib" path="E:/Development/libs/jcc/9.7.2-eGA/db2jcc.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

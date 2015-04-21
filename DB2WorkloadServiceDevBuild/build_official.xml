@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="official build" default="build_official">
+
+	<import file="includes/properties_official.xml"/>
+	<import file="common/build.xml"/>
+	
+	<!-- ==================================
+		builds the official DB2WKL drivers
+		================================== -->
+	<target name="build_official">
+		
+		<antcall target="build_all">
+			<param name="build.base" value="true"/>
+			<param name="build.wkls" value="true"/>
+			<param name="build.register" value="false"/>
+			<param name="build.package" value="true"/>
+		</antcall>
+		
+	</target>
+	
+</project>

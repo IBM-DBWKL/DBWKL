@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Jun 11, 2014 10:54:43 AM                                                        
+
+     Database Workload Service    
+     Deploys the service to a given machine
+                   
+     ====================================================================== -->
+<project name="deploy" default="deploy">
+    <description>
+            Deploys the service to a given machine
+    </description>
+	
+	<taskdef name="staf" classname="com.ibm.staf.ant.taskdef.STAF" classpath="${staf.path}/bin/STAFAnt.jar;${staf.path}/bin/JSTAF.jar"/>
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="${basedir}\libs\ant-contrib.jar" />
+		</classpath>
+	</taskdef>
+	
+	<import file="common/checkStaf.xml"/>
+	<import file="common/removeService.xml"/>
+	<import file="common/checkDB2WKL.xml"/>
+	<import file="includes/properties_deploy.xml"/>
+	
+    <!-- ================================= 
+          target: deploy              
+         ================================= -->
+    <target name="deploy" description="Deploys the service to a given machine">
+        
+    	<!-- check if STAF is running -->
+		<antcall target="check_staf"/>
+    			
+    	<!-- remove the staf service for now -->
+		<antcall target="remove_service"/>
+    	
+    	<!-- copy build to the target machine -->
+    	<antcall target="copy_to_target_machine"/>
+    	
+    	<!-- copy build to the target machine -->
+    	<antcall target="add_service"/>
+    	
+    	<!-- copy build to the target machine -->
+    	<antcall target="run_setup"/>
+    	
+    	<!-- check the installed DB2WKL version -->
+		<antcall target="check_db2wkl"/>
+
+    </target>
+	
+	<!-- 
+		copies dbwkl to the target machine
+		-->
+	<target name="copy_to_target_machine">
+		
+		<!-- create directory structure -->
+		<staf
+			location="${db2wkl.deploy.target}"
+			service="fs"
+			request="CREATE DIRECTORY {STAF/Config/STAFRoot}/services/db2wkl FULLPATH"
+			throwbuildexception="1"/>			
+		
+		<!-- copy dbwkl -->
+		<staf 
+			location="local" 
+			service="fs" 
+			request="COPY 
+						FILE ${db2wkl.output}/${db2wkl.deploy.build}/DB2WorkloadService_${db2wkl.deploy.build}_Deploy.zip
+						TOMACHINE ${db2wkl.deploy.target} 
+						TOFILE {STAF/Config/STAFRoot}/services/db2wkl/DB2WorkloadService_${db2wkl.deploy.build}_Deploy.zip"
+			throwBuildException="1" />	
+		
+		<!-- unzip -->
+		<staf 
+			location="${db2wkl.deploy.target}" 
+			service="zip" 
+			request="UNZIP 
+						ZIPFILE {STAF/Config/STAFRoot}/services/db2wkl/DB2WorkloadService_${db2wkl.deploy.build}_Deploy.zip
+						TODIRECTORY {STAF/Config/STAFRoot}/services/db2wkl
+						REPLACE" 
+			throwBuildException="1" />
+		
+		<!-- delete the zip package -->
+		<staf 
+			location="${db2wkl.deploy.target}" 
+			service="fs" 
+			request="DELETE 
+						ENTRY {STAF/Config/STAFRoot}/services/db2wkl/DB2WorkloadService_${db2wkl.deploy.build}_Deploy.zip
+						CONFIRM" 
+			throwBuildException="1" />
+		
+		<!-- copy jdbc driver -->		
+		<staf 
+			location="local" 
+			service="fs" 
+			request="COPY 
+						DIRECTORY ${db2wkl.input.jdbc} 
+						TOMACHINE ${db2wkl.deploy.target} 
+						TODIRECTORY {STAF/Config/STAFRoot}/services/db2wkl/jdbc
+						RECURSE KEEPEMPTYDIRECTORIES"
+			throwBuildException="1" />
+		
+	</target>
+	
+	<!-- 
+		starts dbwkl on the target machine
+		-->
+	<target name="add_service">
+		
+		<staf 
+			location="${db2wkl.deploy.target}" 
+			service="service" 
+			request="ADD 
+						SERVICE db2wkl 
+						LIBRARY JSTAF 
+						EXECUTE {STAF/config/STAFroot}/services/db2wkl/${db2wkl.jar} 
+						OPTION JVMName=DB2WKLJVM 
+						OPTION J2=-verbose"
+			throwBuildException="1" />		
+		
+	</target>
+	
+	<!-- 
+		starts dbwkl on the target machine
+		-->
+	<target name="run_setup">
+		
+		<staf 
+			location="${db2wkl.deploy.target}" 
+			service="db2wkl" 
+			request="SETUP 
+						JCCLIBS {STAF/Config/STAFRoot}/services/db2wkl/jdbc
+						OVERRIDE"
+			throwBuildException="1" />		
+		
+	</target>
+
+</project>

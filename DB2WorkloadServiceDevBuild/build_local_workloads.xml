@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="local workload builds" default="build_workloads">
+
+	<import file="includes/properties_dev.xml"/>
+	<import file="common/build.xml"/>
+	
+	<!-- ==================================
+		builds the local dev workloads
+		================================== -->
+	<target name="build_workloads">
+		
+		<antcall target="build_all">
+			<param name="build.base" value="false"/>
+			<param name="build.wkls" value="true"/>
+			<param name="build.register" value="false"/>
+			<param name="build.package" value="false"/>
+		</antcall>
+		
+	</target>
+	
+</project>

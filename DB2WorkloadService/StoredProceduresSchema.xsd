@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/StoredProceduresSchema"
+	xmlns:spm="http://www.example.org/StoredProceduresSchema"
+	elementFormDefault="qualified"
+	attributeFormDefault="qualified">
+
+	<element name="Task" >
+		<complexType>
+			<sequence>
+				<element name="replay" type="boolean" default="false"/>
+                <element name="procedure" type="spm:Procedure" minOccurs="1" maxOccurs="unbounded" />
+            </sequence>
+		</complexType>
+	</element>
+
+	<complexType name="Procedure">
+		<sequence>
+			<element name="name" type="string" minOccurs="1" />
+			<element name="schema" type="string" minOccurs="0" />
+			<element name="weight" minOccurs="1" type="int">
+
+			</element>
+			<element name="parameter" type="spm:Parameter" nillable="true"
+				minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="Parameter">
+		<sequence>
+			<element name="name" type="string" minOccurs="1" />
+			<element name="dataType" type="spm:ParameterDataType"
+				default="integer" maxOccurs="1" minOccurs="1" />
+			<element name="parmType" type="spm:ParameterType"
+				default="in" minOccurs="1" maxOccurs="1"/>
+			<element name="min" type="string" maxOccurs="1"
+				minOccurs="0" />
+			<element name="max" type="string" maxOccurs="1"
+				minOccurs="0" />
+			<element name="value" type="string" maxOccurs="1"
+				minOccurs="0" />
+			<element name="list" type="string" maxOccurs="1"
+				minOccurs="0" />
+			<element name="executionValue" type="string" maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<simpleType name="ParameterDataType">
+		<restriction base="string">
+			<enumeration value="integer" />
+			<enumeration value="varchar" />
+			<enumeration value="char" />
+			<enumeration value="smallint" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ParameterType">
+		<restriction base="string">
+			<enumeration value="in" />
+			<enumeration value="out" />
+			<enumeration value="in_out" />
+		</restriction>
+	</simpleType>
+
+</schema>

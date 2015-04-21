@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Build Workload UDFs" default="build_workload_udf">
+
+	<import file="../common/buildWorkload.xml"/>
+	
+	<!-- ==================================
+		Builds the TPC workload collection
+		================================== -->
+	<target name="build_workload_udf">
+		
+		<antcall target="build_workload" inheritall="true">
+			<param name="wkl.project.name" value="Workload_UserDefinedFunctions"/>
+			<param name="build.target" value="${build.target}"/>
+		</antcall>
+		
+	</target>
+</project>

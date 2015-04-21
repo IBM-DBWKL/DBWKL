@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="build core project">
+
+	<!--
+		Request library
+		-->
+    <target name="build_core">
+    	<mkdir dir="${db2wkl.build.output}"/>
+    			
+		<copy todir="${db2wkl.build.output}">
+			<fileset dir="${proj.db2wkl.core.path}/bin" />
+		</copy>
+		
+		<!-- build jar for the Core -->
+		<jar destfile="${db2wkl.jar.core}" basedir="${db2wkl.build.output}" includes="**/*.*" excludes="**/*.properties"/>
+		
+		<!-- CHANGE THIS PATH ACCORDING TO YOUR STAF INSTALLATION PATH -->
+		<move file="${db2wkl.jar.core}" todir="${build.target}" overwrite="true" />
+		<sleep seconds="5"/>
+		
+		<!-- delete the content of the standard output -->
+		<delete dir="${db2wkl.build.output}" />
+		<delete file="${db2wkl.jar.core}"/>
+	</target>
+	
+</project>

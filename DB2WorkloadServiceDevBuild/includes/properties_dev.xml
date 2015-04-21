@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="dev properties">
+
+	<import file="properties_common.xml"/>
+	
+	<property name="db2wkl.path" value="${staf.path}/services/db2wkl/"/>
+			
+
+</project>

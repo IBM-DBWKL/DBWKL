@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="com/ibm/db2wkl/coordination/ReroutedRequestsLogger.java|com/ibm/db2wkl/coordination/|com/ibm/db2wkl/request/internal/RedirectHandler.java|com/ibm/db2wkl/Result.java" kind="src" path="src"/>
+	<classpathentry kind="lib" path="libs/commons-lang3-3.1.jar"/>
+	<classpathentry kind="lib" path="libs/commons-io-2.4.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DB2WorkloadServiceCore"/>
+	<classpathentry kind="src" path="/DB2WorkloadServiceRequest"/>
+	<classpathentry kind="lib" path="E:/Development/libs/jcc/9.7.2-eGA/db2jcc.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/IBM/STAF3417/bin/JSTAF.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

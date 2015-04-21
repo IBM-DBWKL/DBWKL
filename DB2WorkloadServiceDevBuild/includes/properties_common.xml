@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="common properties">
+
+	<property name="db2wkl.build.output" value="${db2wkl.output}/output"/>
+		
+	<tstamp>
+		<format property="db2wkl.build.date" pattern="yyyyMMdd-HHmmss" locale="en,GB"/>
+	</tstamp>
+	<property name="db2wkl.build.version.final" value="${db2wkl.build.version}.${db2wkl.build.date}"/>
+	
+	<property name="db2wkl.jar" value="db2wkl.jar"/>
+	<property name="db2wkl.jar.core" value="db2wkl.core.jar"/>
+	<property name="db2wkl.jar.request" value="db2wkl.request.jar" />
+			
+	<property name="proj.db2wkl.path" value="../DB2WorkloadService"/>
+	<property name="proj.db2wkl.core.path" value="../DB2WorkloadServiceCore"/>
+	<property name="proj.db2wkl.request.path" value="../DB2WorkloadServiceRequest"/>
+	
+</project>

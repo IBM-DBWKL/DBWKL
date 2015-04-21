@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="build service project">
+
+	<!--
+		only builds the main service
+		-->
+    <target name="build_service">
+
+    	<!-- create the folder structure -->
+    	<mkdir dir="output" />
+		<mkdir dir="output/STAF-INF"/>
+    	
+    	<!-- copy the classes of the service project into the STAF based classes folder -->
+    	<mkdir dir="output/STAF-INF/classes"/>
+		<copy todir="output/STAF-INF/classes">
+			<fileset dir="${proj.db2wkl.path}/bin" />
+		</copy>
+    	
+    	<!-- create the jars folder that has all dependencies for the service itself -->
+    	<mkdir dir="output/STAF-INF/jars"/>
+		
+    	<!-- build the core project -->
+    	<jar 
+    		destfile="output/STAF-INF/jars/${db2wkl.jar.core}" 
+    		basedir="${proj.db2wkl.core.path}/bin" 
+    		includes="**/*.*" 
+    		excludes="**/*.properties"/>
+    	
+    	<!-- build the request project -->
+    	<jar 
+    		destfile="output/STAF-INF/jars/${db2wkl.jar.request}" 
+    		basedir="${proj.db2wkl.request.path}/bin" 
+    		includes="**/*.*" 
+    		excludes="**/*.properties">
+    		<manifest>
+				<attribute name="Main-Class" value="com.ibm.db2wkl.request.RequestPerformer"/>
+			</manifest>
+    	</jar>
+    	
+    	<!-- get the dependent libraries -->
+    	<copy todir="output/STAF-INF/jars" verbose="true">
+    		<fileset file="${proj.db2wkl.path}/libs/commons-lang3-3.1.jar"></fileset>
+    		<fileset file="${proj.db2wkl.path}/libs/commons-io-2.4.jar"></fileset>
+    		<fileset file="${proj.db2wkl.path}/libs/commons-codec-1.4.jar"></fileset>
+    	</copy>
+    	
+    	<!-- update the build file -->
+    	<echo file="output/STAF-INF/classes/com/ibm/db2wkl/files/version.txt">${db2wkl.build.version.final}</echo>
+		<touch file="output/build.txt" />
+		<propertyfile file="output/build.txt">
+		  	<entry  key="build" type="int" default="0001" operation="+" pattern="0000"/>
+		</propertyfile>
+    	
+    	<!-- create the service jar -->
+    	<jar destfile="${db2wkl.jar}" manifest="${proj.db2wkl.path}/META-INF/MANIFEST.MF" basedir="output"/>
+    	
+    	<!-- copy to target location -->
+    	<move file="${db2wkl.jar}" todir="${build.target}"></move>
+
+		<!-- cleanup -->		    	
+    	<delete dir="output" />
+    	<delete file="${db2wkl.jar.core}"/>
+    	
+	</target>
+	
+</project>

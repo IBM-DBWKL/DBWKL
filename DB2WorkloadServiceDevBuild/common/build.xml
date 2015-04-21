@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="builds db2wkl" default="build_all">
+
+	<taskdef name="staf" classname="com.ibm.staf.ant.taskdef.STAF" classpath="${staf.path}/bin/STAFAnt.jar;${staf.path}/bin/JSTAF.jar"/>
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="${basedir}\libs\ant-contrib.jar" />
+		</classpath>
+	</taskdef>
+	
+	<import file="../common/checkStaf.xml"/>
+	<import file="../common/removeService.xml"/>
+	<import file="../common/checkDB2WKL.xml"/>
+	<import file="../projects/service.xml"/>
+	<import file="../projects/core.xml"/>
+	<import file="../projects/request.xml"/>
+	<import file="../projects/setup.xml"/>
+	<import file="../workloads/default.xml"/>
+	<import file="../workloads/internal_test.xml"/>
+	<import file="../workloads/irww.xml"/>
+	<import file="../workloads/sp_sqlpl.xml"/>
+	<import file="../workloads/test.xml"/>
+	<import file="../workloads/tpcc.xml"/>
+	<import file="../workloads/udf.xml"/>
+	
+	<!-- ==================================
+		Targets
+		================================== -->
+	<target name="build_all">
+		
+		<!-- deploy the workload to the local machine only -->
+		<if>
+			<equals arg1="${build.register}" arg2="true"/>
+			<then>
+				<!-- check if STAF is running -->
+				<antcall target="check_staf"/>
+		    			
+		    	<!-- remove the staf service for now -->
+				<antcall target="remove_service"/>
+		    	
+			</then>
+		</if>
+		
+		<!-- build the base -->
+		<if>
+			<equals arg1="${build.base}" arg2="true"/>
+			<then>
+				<!-- build the core (needs to be built before the base due to the dependencies) -->
+				<antcall target="build_core">
+					<param name="build.target" value="${db2wkl.path}"/>
+				</antcall>
+						
+				<!-- RequestPerformer to perform the db2wkl core requests -->
+				<antcall target="build_request">
+					<param name="build.target" value="${db2wkl.path}"/>
+				</antcall>
+				
+				<!-- build the base -->
+				<antcall target="build_service">
+					<param name="build.target" value="${db2wkl.path}"/>
+				</antcall>
+				
+				<!-- create the base folder structure -->
+				<antcall target="build_setup">
+					<param name="build.target" value="${db2wkl.path}"/>
+				</antcall>
+			</then>
+		</if>
+		
+		
+		<!-- build the workloads -->
+		<if>
+			<equals arg1="${build.wkls}" arg2="true"/>
+			<then>
+				<antcall target="build_workload_default">
+					<param name="build.target" value="${db2wkl.path}/workloads"/>
+				</antcall>
+				<antcall target="build_workload_internal_test">
+					<param name="build.target" value="${db2wkl.path}/workloads"/>
+				</antcall>
+				<antcall target="build_workload_irww">
+					<param name="build.target" value="${db2wkl.path}/workloads"/>
+				</antcall>
+				<antcall target="build_workload_sqlpl">
+					<param name="build.target" value="${db2wkl.path}/workloads"/>
+				</antcall>
+				<antcall target="build_workload_test">
+					<param name="build.target" value="${db2wkl.path}/workloads"/>
+				</antcall>
+				<antcall target="build_workload_tpc">
+					<param name="build.target" value="${db2wkl.path}/workloads"/>
+				</antcall>
+				<antcall target="build_workload_udf">
+					<param name="build.target" value="${db2wkl.path}/workloads"/>
+				</antcall>
+			</then>
+		</if>
+		
+		<!-- deploy the workload to the local machine only -->
+		<if>
+			<equals arg1="${build.register}" arg2="true"/>
+			<then>
+				<!-- register/add service -->
+				<antcall target="add_service"/>
+				
+				<!-- check the installed DB2WKL version -->
+				<antcall target="check_db2wkl"/>
+			</then>
+		</if>
+		
+		<!-- package the workload -->
+		<if>
+			<equals arg1="${build.package}" arg2="true"/>
+			<then>
+				<antcall target="copy_tofinal" />
+			</then>
+		</if>
+	</target>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: create the DB2WKL packages
+         - - - - - - - - - - - - - - - - - -->
+	<target name="copy_tofinal">
+		<move todir="${db2wkl.path}/db2wkl" includeEmptyDirs="true">
+			<fileset dir="${db2wkl.path}" includes="**/*"/>
+		</move>		
+		
+		<!-- build the public package -->
+		<zip destfile="${db2wkl.path}/DB2WorkloadService_${db2wkl.build.version.final}.zip" basedir="${db2wkl.path}/db2wkl/" update="false">
+			<exclude name="**/db2jcc_license_cisuz.jar"/>
+			<exclude name="**/db2jcc.jar"/>
+			<exclude name="**/ant-contrib.jar"/>
+			<exclude name="**/Workload_*.jar"/>
+			<fileset dir="${db2wkl.path}/db2wkl/" >
+			    <include name="**/Workload_DefaultCollection.jar"/>
+			</fileset>
+		</zip>
+		
+		<!-- build the internal test package -->
+		<zip destfile="${db2wkl.path}/DB2WorkloadService_${db2wkl.build.version.final}_Test.zip" basedir="${db2wkl.path}/db2wkl/" update="false">
+			<exclude name="**/db2jcc_license_cisuz.jar"/>
+			<exclude name="**/db2jcc.jar"/>
+			<exclude name="**/ant-contrib.jar"/>
+			<exclude name="**/Workload_*.jar"/>
+			<fileset dir="${db2wkl.path}/db2wkl/" >
+			    <include name="**/Workload_DefaultCollection.jar"/>
+				<include name="**/Workload_Internal_TestCollection.jar"/>
+			</fileset>
+		</zip>
+		
+		<!-- build the internal deploy -->
+		<zip destfile="${db2wkl.path}/DB2WorkloadService_${db2wkl.build.version.final}_Deploy.zip" basedir="${db2wkl.path}/db2wkl/" update="false">
+			<exclude name="**/db2jcc_license_cisuz.jar"/>
+			<exclude name="**/db2jcc.jar"/>
+			<exclude name="**/ant-contrib.jar"/>
+		</zip>
+	</target>
+	
+	<!-- 
+		starts dbwkl on the target machine
+		-->
+	<target name="add_service">
+		
+		<staf 
+			location="${db2wkl.deploy.target}" 
+			service="service" 
+			request="ADD 
+						SERVICE db2wkl 
+						LIBRARY JSTAF 
+						EXECUTE {STAF/config/STAFroot}/services/db2wkl/${db2wkl.jar} 
+						OPTION JVMName=DB2WKLJVM 
+						OPTION J2=-verbose"
+			throwBuildException="1" />		
+		
+	</target>
+	
+</project>

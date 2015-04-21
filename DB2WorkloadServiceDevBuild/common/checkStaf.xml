@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Nov 7, 2013 8:22:25 AM                                                        
+
+     DB2 Workload Service    
+     Common build file to print the staf version (basically check whether STAF is running)
+                   
+     Stephan                                                                
+     ====================================================================== -->
+<project name="check staf">
+    <description>
+            Common build file to print the staf version (basically check whether STAF is running)
+    </description>
+
+	<!-- 
+		Checks that STAF is running
+		-->
+	<target name="check_staf">
+		<trycatch>
+			<try>
+				<staf location="${db2wkl.deploy.target}" service="MISC" request="VERSION" throwBuildException="1" resultprefix="version"/>
+				<echo message="${version.result}"/>
+			</try>
+			<catch>
+				<fail message="STAF not running"/>
+			</catch>
+		</trycatch>
+	</target>
+
+</project>

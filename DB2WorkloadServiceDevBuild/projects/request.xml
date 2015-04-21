@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="build request project">
+
+	<!--
+		Request library
+		-->
+    <target name="build_request">
+		<!-- folder for compiled files -->
+		<mkdir dir="${db2wkl.build.output}"/>
+		
+		<copy todir="${db2wkl.build.output}">
+			<fileset dir="${proj.db2wkl.request.path}/bin" />
+		</copy>
+		
+		<!-- build jar for the request -->
+		<jar destfile="${db2wkl.jar.request}" basedir="${db2wkl.build.output}" includes="**/*.*" excludes="**/*.properties">
+			<manifest>
+				<attribute name="Main-Class" value="com.ibm.db2wkl.request.RequestPerformer"/>
+			</manifest>
+		</jar>
+		<move file="${db2wkl.jar.request}" todir="${build.target}" overwrite="true" />
+		
+		<!-- delete the content of the standard output -->
+		<delete dir="${db2wkl.build.output}" />
+		<delete file="${db2wkl.jar.request}"/>
+	</target>
+	
+</project>

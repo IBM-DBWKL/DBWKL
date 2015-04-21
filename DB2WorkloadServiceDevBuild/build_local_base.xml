@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="local dev build" default="build_dev">
+
+	<import file="includes/properties_dev.xml"/>
+	<import file="common/build.xml"/>
+		
+	<property name="db2wkl.deploy.target" value="local"/>
+	
+	<!-- ==================================
+		builds the local dev DB2WKL drivers
+		================================== -->
+	<target name="build_dev">
+		
+		<antcall target="build_all">
+			<param name="build.base" value="true"/>
+			<param name="build.wkls" value="false"/>
+			<param name="build.register" value="true"/>
+			<param name="build.package" value="false"/>
+		</antcall>
+		
+	</target>
+	
+</project>

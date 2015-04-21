@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="build setup">
+
+	<!--
+		only creates the base folder structure for DB2WKL
+		-->
+    <target name="build_setup">
+    	
+    	<mkdir dir="${build.target}/"/>
+    	<mkdir dir="${build.target}/libs/"/>
+    	<mkdir dir="${build.target}/workloads/"/>
+    	<mkdir dir="${build.target}/log/"/>
+    	<mkdir dir="${build.target}/pdq/"/>
+    	<mkdir dir="${build.target}/config/"/>
+    	
+    	<!-- SPM folders -->
+    	<mkdir dir="${build.target}/tasks/"/>
+    	<mkdir dir="${build.target}/tasks/output/"/>   	
+    	<mkdir dir="${build.target}/schema/"/>
+    	
+		<!-- StoredProceduresSchema file -->
+		<copy file="${proj.db2wkl.path}/StoredProceduresSchema.xsd" todir="${build.target}/schema/"/>
+		<!-- StoredProceduresModule sample file -->
+		<copy file="${proj.db2wkl.path}/samples/SPMExample.xml" todir="${build.target}/tasks/"/>
+    	
+    	<!-- generate date and time for the build -->
+    	<tstamp>
+	    	<format property="buildDate" pattern="yyyyMMdd-hhmm" locale="en,UK"/>
+	  	</tstamp>
+    	
+    	<!-- Copying libs -->
+    	<copy todir="${build.target}/libs/">
+    		<fileset dir="${proj.db2wkl.path}/libs">
+    			<exclude name="db2jcc.jar"/>
+    		</fileset>
+		</copy>
+    	
+    	<!-- Copy the config sample -->
+    	<copy todir="${build.target}/config/">
+			<fileset dir="${proj.db2wkl.path}/config">
+				<include name="db2workload.dbs" />
+			</fileset>
+		</copy>
+    	
+    </target>
+	
+</project>

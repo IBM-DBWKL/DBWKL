@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Build Workload IRWW" default="build_workload_irww">
+
+	<import file="../common/buildWorkload.xml"/>
+		
+	<!-- ==================================
+		Builds the default workload collection
+		================================== -->
+	<target name="build_workload_irww">
+		
+		<antcall target="build_workload" inheritall="true">
+			<param name="wkl.project.name" value="Workload_IRWW"/>
+			<param name="build.target" value="${build.target}"/>
+		</antcall>
+		
+	</target>
+</project>
