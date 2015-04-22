@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>DB2WorkloadServiceRequest</name>
+	<name>com.ibm.dbwkl.request</name>
 	<comment></comment>
 	<projects>
 	</projects>
