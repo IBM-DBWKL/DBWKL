@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="com/ibm/db2wkl/request/handler/ValidatorHandler.java|com/ibm/db2wkl/request/ReroutedRequest.java|com/ibm/db2wkl/request/ExternalRequest.java|com/ibm/db2wkl/request/InternalRequest.java|com/ibm/db2wkl/request/handler/HelpHandler.java|com/ibm/db2wkl/request/handler/ListHandler.java|com/ibm/db2wkl/request/handler/LoggingHandler.java|com/ibm/db2wkl/request/handler/MiscHandler.java|com/ibm/db2wkl/request/handler/ReportHandler.java|com/ibm/db2wkl/request/handler/RequestHandler.java|com/ibm/db2wkl/request/handler/ConnectionTestHandler.java|com/ibm/db2wkl/request/handler/CoordinationHandler.java|com/ibm/db2wkl/request/handler/VersionHandler.java|com/ibm/db2wkl/request/ThreadedRequest.java" kind="src" path="src"/>
-	<classpathentry kind="src" path="srcgen"/>
+	<classpathentry kind="src" path="srcgen">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="libs/activation-1.1.jar"/>
 	<classpathentry kind="lib" path="libs/jaxb-api-2.0.jar"/>
 	<classpathentry kind="lib" path="libs/jaxb-impl-2.0.5-1.jar"/>
