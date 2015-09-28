@@ -8,7 +8,5 @@
 	<classpathentry kind="lib" path="E:/Development/libs/jcc/9.7.2-eGA/db2jcc.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/IBM/STAF3417/bin/JSTAF.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="E:/Development/libs/pdq/V2.35.92/pureQuery/pdq.jar"/>
-	<classpathentry kind="lib" path="E:/Development/libs/pdq/V2.35.92/pureQuery/pdqmgmt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
